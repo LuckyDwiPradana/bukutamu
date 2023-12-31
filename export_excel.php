@@ -3,12 +3,16 @@ require("koneksi.php");
 
 // Fungsi untuk mendapatkan data berdasarkan rentang tanggal
 function getDataByDateRange($conn, $startDate, $endDate) {
+    // Query SQL untuk memilih data dari tabel ttamu berdasarkan rentang tanggal
     $query = "SELECT * FROM ttamu WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
+    //eksekusi
     $result = mysqli_query($conn, $query);
     
+    // Memeriksa hasil query SELECT
     if ($result) {
         return $result;
     } else {
+    // Jika terdapat kesalahan dalam query SELECT, mengembalikan array kosong
         return [];
     }
 }
@@ -46,6 +50,9 @@ echo '</tr>';
 echo '</thead>';
 echo '<tbody>';
 
+//Menginisialisasi variabel $no dengan nilai 1 
+//loop while data $dataRentangTanggal.
+//disimpan di $data
 $no = 1;
 while ($data = mysqli_fetch_array($dataRentangTanggal)) {
     echo '<tr>';

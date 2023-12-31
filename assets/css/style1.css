@@ -703,6 +703,10 @@ section {
   color: white;
 }
 
+.footer .footer-info p {
+  padding-top: 30px;
+}
+
 .footer .footer-info .logo {
   line-height: 0;
   margin-bottom: 25px;
@@ -756,41 +760,8 @@ section {
   margin-bottom: 30px;
 }
 
-.footer .footer-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer .footer-links ul i {
-  padding-right: 2px;
-  color: rgba(13, 66, 255, 0.8);
-  font-size: 12px;
-  line-height: 0;
-}
-
-.footer .footer-links ul li {
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-}
-
-.footer .footer-links ul li:first-child {
-  padding-top: 0;
-}
-
-.footer .footer-links ul a {
-  color: rgba(255, 255, 255, 0.6);
-  transition: 0.3s;
-  display: inline-block;
-  line-height: 1;
-}
-
-.footer .footer-links ul a:hover {
-  color: #fff;
-}
-
 .footer .footer-contact p {
+  padding-top: 15px;
   line-height: 26px;
 }
 
@@ -806,4 +777,9 @@ section {
 
 .footer .credits a {
   color: #fff;
+}
+
+.footer .table {
+  border: 1px;
+  background-color: var(--color-secondary);
 }

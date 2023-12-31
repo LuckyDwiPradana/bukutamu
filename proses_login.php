@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Jika tidak ada pengguna yang ditemukan, tampilkan pesan kesalahan menggunakan JavaScript
             echo '<script>';
-            echo 'alert("Username atau password salah hmm!");';
+            echo 'alert("Username atau password salah!");';
             echo 'window.location.href = "login.php";';
             echo '</script>';
             exit();

@@ -16,14 +16,14 @@ require("koneksi.php");
 
 
 
-// Memeriksa apakah formulir telah disubmit
+// Memeriksa formulir telah disimpan
 if (isset($_POST['simpan'])) {
     // Mengambil data dari formulir
     $nama = mysqli_real_escape_string($conn, $_POST['nama']);
     $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
     $instansi = mysqli_real_escape_string($conn, $_POST['instansi']);
     $kontak = mysqli_real_escape_string($conn, $_POST['kontak']);
-    // Query SQL untuk menyimpan data ke tabel ttamu dengan tanggal otomatis
+    // query = untuk menyimpan data ke tabel ttamu dengan tanggal otomatis
     $query = "INSERT INTO ttamu (nama, alamat, instansi, kontak, tanggal) VALUES ('$nama', '$alamat', '$instansi', '$kontak', NOW())";
      // Menjalankan query dan memeriksa apakah berhasil
      if (mysqli_query($conn, $query)) {
@@ -41,13 +41,18 @@ if (isset($_POST['simpan'])) {
 
 // Fungsi untuk mendapatkan jumlah data berdasarkan tanggal
 function getJumlahData($conn, $tanggalCondition) {
+    // Membuat query untuk menghitung jumlah baris dalam tabel 'ttamu' berdasarkan tanggal
     $query = "SELECT COUNT(*) as jumlah FROM ttamu WHERE $tanggalCondition";
+    // Mengeksekusi query menggunakan koneksi database ($conn)
     $result = mysqli_query($conn, $query);
-    
+    // Memeriksa apakah eksekusi query berhasil
     if ($result) {
+         // Mengambil hasil query sebagai array 
         $row = mysqli_fetch_assoc($result);
+        // Mengembalikan nilai jumlah data dari kolom 'jumlah'
         return $row['jumlah'];
     } else {
+         // Jika eksekusi query tidak berhasil, mengembalikan nilai 0
         return 0;
     }
 }
@@ -69,25 +74,33 @@ $jumlahKeseluruhan = getJumlahData($conn, "1");
 
 
 // Memeriksa aksi edit
+//Dilakukan pengecekan apakah terdapat parameter query string dengan nama 'aksi' dan nilai 'edit'.
 if (isset($_GET['aksi']) && $_GET['aksi'] == 'edit') {
+    // Mengambil nilai 'id' dari parameter query string
     $id = $_GET['id'];
     header("Location: edit_form.php?id=$id");
-    exit(); // Ensure that no further code is executed after the redirect
+    //berhentiiii
+    exit();
 
 }
 
 // Memeriksa aksi delete
+//pengecekan apakah terdapat parameter query string dengan nama 'aksi' dan nilai 'delete'.
 if (isset($_GET['aksi']) && $_GET['aksi'] == 'delete') {
+    // Mengambil nilai 'id' dari parameter query string
     $id = $_GET['id'];
+    // Query SQL untuk menghapus data dari tabel ttamu berdasarkan nilai 'id'
     $queryDelete = "DELETE FROM ttamu WHERE id = $id";
+    // Menjalankan query DELETE dan memeriksa hasilnya
     if (mysqli_query($conn, $queryDelete)) {
-        // Redirect atau lakukan sesuatu setelah berhasil menghapus
+        // alert setelah berhasil menghapus
         echo '<script>';
         echo 'alert("Data berhasil dihapus!");';
         echo 'window.location.href = "' . $_SERVER['PHP_SELF'] . '";';
         echo '</script>';
         exit();
     } else {
+        //jika ada salah pesan error 
         echo "Error: " . mysqli_error($conn);
     }
 }
@@ -113,7 +126,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'delete') {
     <meta name="author" content="">
 
     <title>Buku Tamu </title>
-    <link rel="icon" href="assets/img/logo2.png" type="icon">
+    <link rel="icon" href="assets/img/logopudam.png" type="icon">
 
     <!-- Custom fonts for this template-->
     <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -171,10 +184,16 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'delete') {
                                     </thead>
                                     <tbody>
                                     <?php
+                                    // Mengambil tanggal saat ini dalam format "Y-m-d"
                                     $tanggal_hari_ini = date("Y-m-d");
-                                    $tampil = mysqli_query($conn, "SELECT * FROM ttamu WHERE tanggal = '$tanggal_hari_ini' ORDER BY id DESC");                            $no = 1;
+                                    // Melakukan query ke database untuk memilih kolom dari tabel 'ttamu' di mana 'tanggal' cocok dengan tanggal saat ini
+                                    $tampil = mysqli_query($conn, "SELECT * FROM ttamu WHERE tanggal = '$tanggal_hari_ini' ORDER BY id DESC");                            
+                                    $no = 1;
+                                    // Melakukan perulangan untuk setiap baris data yang diambil dari database
                             while ($data = mysqli_fetch_array($tampil)) {
+                                 // Menampilkan data baris dalam struktur tabel HTML
                             ?>
+                            
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><?= $data['tanggal'] ?></td>
@@ -183,6 +202,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'delete') {
                                     <td><?= $data['instansi'] ?></td>
                                     <td><?= $data['kontak'] ?></td>
                                     <td>
+                                        <!-- Tombol Edit dan Hapus) -->
                                     <a href="?aksi=edit&id=<?= $data['id'] ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>Edit</a>
                                     <a href="?aksi=delete&id=<?= $data['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fas fa-trash-alt"></i>Hapus</a>
                                     </td>

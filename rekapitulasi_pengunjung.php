@@ -2,15 +2,21 @@
 require("koneksi.php");
 
 // Fungsi untuk mendapatkan data berdasarkan rentang tanggal
+//mengambl data berdasarkan tanggal filter 
 function getDataByDateRange($conn, $startDate, $endDate) {
     $startDate = mysqli_real_escape_string($conn, $startDate);
     $endDate = mysqli_real_escape_string($conn, $endDate);
+    // Query SQL untuk memilih data dari tabel ttamu berdasarkan rentang tanggal
     $query = "SELECT * FROM ttamu WHERE tanggal BETWEEN '$startDate' AND '$endDate'";
+    //eksekusi
     $result = mysqli_query($conn, $query);
     
+     // Memeriksa hasil query SELECT
     if ($result) {
+        // Mengembalikan hasil query sebagai objek hasil (result)
         return $result;
     } else {
+        // Jika terdapat kesalahan dalam query SELECT, mengembalikan array kosong
         return [];
     }
 }
@@ -29,13 +35,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Mendapatkan data dalam rentang waktu tertentu
 $dataRentangTanggal = getDataByDateRange($conn, $startDate, $endDate);
 
+// Memeriksa aksi edit
+//Dilakukan pengecekan apakah terdapat parameter query string dengan nama 'aksi' dan nilai 'edit'.
+if (isset($_GET['aksi']) && $_GET['aksi'] == 'edit') {
+    // Mengambil nilai 'id' dari parameter query string
+    $id = $_GET['id'];
+    header("Location: edit_formrekap.php?id=$id");
+    //berhentiiii
+    exit();
+
+}
+
+// Memeriksa aksi delete
+//pengecekan apakah terdapat parameter query string dengan nama 'aksi' dan nilai 'delete'.
+if (isset($_GET['aksi']) && $_GET['aksi'] == 'delete') {
+    // Mengambil nilai 'id' dari parameter query string
+    $id = $_GET['id'];
+    // Query SQL untuk menghapus data dari tabel ttamu berdasarkan nilai 'id'
+    $queryDelete = "DELETE FROM ttamu WHERE id = $id";
+    // Menjalankan query DELETE dan memeriksa hasilnya
+    if (mysqli_query($conn, $queryDelete)) {
+        // alert setelah berhasil menghapus
+        echo '<script>';
+        echo 'alert("Data berhasil dihapus!");';
+        echo 'window.location.href = "' . $_SERVER['PHP_SELF'] . '";';
+        echo '</script>';
+        exit();
+    } else {
+        //jika ada salah pesan error 
+        echo "Error: " . mysqli_error($conn);
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Tambahkan tag head sesuai kebutuhan (misalnya, tautan ke CSS) -->
+    <!-- Favicons -->
+    <link href="assets/img/logopudam.png" rel="icon">
+    <link href="assets/img/logopudam.png" rel="icon-logo">
     <!-- Custom fonts for this template-->
     <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -59,7 +98,7 @@ $dataRentangTanggal = getDataByDateRange($conn, $startDate, $endDate);
             <div class="col-md-12">
                 <div class="card shadow bg-gradient-light mx-lg-5">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Rekapitulasi Pengunjung</h6>
+                        <h4 class="m-0 font-weight-bold text-primary text-center">Rekapitulasi Pengunjung</h4>
                     </div>
                     <div class="card-body">
                         <!-- Formulir untuk memfilter data berdasarkan tanggal -->
@@ -94,6 +133,7 @@ $dataRentangTanggal = getDataByDateRange($conn, $startDate, $endDate);
                                         <th>Alamat</th>
                                         <th>Instansi</th>
                                         <th>Kontak</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -108,6 +148,11 @@ $dataRentangTanggal = getDataByDateRange($conn, $startDate, $endDate);
                                             <td><?= $data['alamat'] ?></td>
                                             <td><?= $data['instansi'] ?></td>
                                             <td><?= $data['kontak'] ?></td>
+                                            <td>
+                                            <!-- Tombol Edit dan Hapus) -->
+                                    <a href="?aksi=edit&id=<?= $data['id'] ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>Edit</a>
+                                    <a href="?aksi=delete&id=<?= $data['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fas fa-trash-alt"></i>Hapus</a>
+                                    </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

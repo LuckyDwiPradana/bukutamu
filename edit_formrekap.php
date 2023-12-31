@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     if (mysqli_query($conn, $queryUpdate)) {
         echo '<script>';
         echo 'alert("Data berhasil diperbarui!");';
-        echo 'window.location.href = "admin.php";';
+        echo 'window.location.href = "rekapitulasi_pengunjung.php";';
         echo '</script>';
         exit();
       //tampil error jika ada kesalahhan  

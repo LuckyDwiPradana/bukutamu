@@ -11,7 +11,7 @@
 
     <title>Login</title>
 
-    <link rel="icon" href="assets/img/logo2.png" type="icon">
+    <link rel="icon" href="assets/img/logopudam.png" type="icon">
     <!-- Custom fonts for this template-->
     <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -37,8 +37,8 @@
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-lg-block bg-primary shadow-lg p-5 text-center">
-                                <img src="assets/img/logo2.png" alt="logo" width="200">
-                                <h3 class="text-white">Sistem Informasi Buku Tamu <br>Pudam Banyuwangi</h3>
+                                <img src="assets/img/logopudam.png" alt="logo" width="200">
+                                <h3 class="text-white">Sistem Informasi Buku Tamu <br>PUDAM Banyuwangi</h3>
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
@@ -49,11 +49,12 @@
                                         <div class="form-group">
                                             <input type="text" name="username" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Masukan Nama">
+                                                placeholder="Masukan Nama" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Masukan Password">
+                                                id="exampleInputPassword" placeholder="Masukan Password" 
+                                                pattern="(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Password setidaknya harus 8 karakter dan harus mengandung huruf besar, huruf kecil dan angka" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -66,7 +67,7 @@
                                         </form>
                                         <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">By. Pudam Banyuwangi | 2023 - <?=date('Y')?></a>
+                                        <a class="small">MKI PUDAM Banyuwangi | 2023 - <?=date('Y')?></a>
                                     </div>
                                 </div>
                             </div>
