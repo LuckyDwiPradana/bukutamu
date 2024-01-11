@@ -26,6 +26,7 @@ $startDate = date('Y-m-d', strtotime('-1 month'));
 $endDate = date('Y-m-d');
 
 // Memeriksa apakah formulir telah disubmit
+//filter
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mengambil data tanggal dari formulir
     $startDate = mysqli_real_escape_string($conn, $_POST['start_date']);
@@ -133,6 +134,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'delete') {
                                         <th>Alamat</th>
                                         <th>Instansi</th>
                                         <th>Kontak</th>
+                                        <th>Keperluan</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -148,8 +150,11 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'delete') {
                                             <td><?= $data['alamat'] ?></td>
                                             <td><?= $data['instansi'] ?></td>
                                             <td><?= $data['kontak'] ?></td>
+                                            <td><?= $data['keperluan'] ?></td>
                                             <td>
                                             <!-- Tombol Edit dan Hapus) -->
+                                    <!-- digunakan untuk membuat tautan hyperlink dengan parameter aksi "delete" 
+                                    dan nilai ID yang diambil dari variabel $data['id'] -->
                                     <a href="?aksi=edit&id=<?= $data['id'] ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>Edit</a>
                                     <a href="?aksi=delete&id=<?= $data['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fas fa-trash-alt"></i>Hapus</a>
                                     </td>

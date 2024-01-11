@@ -1,7 +1,6 @@
 <?php
 session_start();
 require("koneksi.php");
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mengambil data dari formulir
     $username = mysqli_real_escape_string($conn, $_POST['username']);

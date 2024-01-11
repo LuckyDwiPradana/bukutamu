@@ -12,8 +12,10 @@ if (isset($_POST['simpan'])) {
     $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
     $instansi = mysqli_real_escape_string($conn, $_POST['instansi']);
     $kontak = mysqli_real_escape_string($conn, $_POST['kontak']);
+    $keperluan = mysqli_real_escape_string($conn, $_POST['keperluan']);
     // Query SQL untuk menyimpan data ke tabel ttamu dengan tanggal otomatis
-    $query = "INSERT INTO ttamu (nama, alamat, instansi, kontak, tanggal) VALUES ('$nama', '$alamat', '$instansi', '$kontak', NOW())";
+    $query = "INSERT INTO ttamu (nama, alamat, instansi, kontak, keperluan, tanggal) 
+    VALUES ('$nama', '$alamat', '$instansi', '$kontak','$keperluan', NOW())";
      // Menjalankan query dan memeriksa apakah berhasil
      if (mysqli_query($conn, $query)) {
         // Jika berhasil, lakukan redirect ke halaman yang sama untuk menghindari masalah reload
@@ -215,6 +217,9 @@ $jumlahKeseluruhan = getJumlahData($conn, "1");
               </div>
               <div class="form-group">
                 <input type="text" class="form-control form-control-user" name="kontak" placeholder="Kontak" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control form-control-user" name="keperluan" placeholder="Keperluan" required>
               </div>
               <button type="submit" name="simpan" class="btn btn-primary btn-user btn-block">Simpan</button>
             </form>

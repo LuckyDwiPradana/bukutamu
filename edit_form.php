@@ -11,8 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
     $instansi = mysqli_real_escape_string($conn, $_POST['instansi']);
     $kontak = mysqli_real_escape_string($conn, $_POST['kontak']);
+    $keperluan = mysqli_real_escape_string($conn, $_POST['keperluan']);
     //melakukan pembaruan data di tabel ttamu berdasarkan nilai yang diterima dari formulir.
-    $queryUpdate = "UPDATE ttamu SET nama='$nama', alamat='$alamat', instansi='$instansi', kontak='$kontak' WHERE id='$id'";
+    $queryUpdate = "UPDATE ttamu SET nama='$nama', alamat='$alamat', instansi='$instansi', kontak='$kontak', keperluan='$keperluan' WHERE id='$id'";
 
     //eksekusi menggunakan koneksi database. Jika berhasil, tampilkan alert dan redirect ke halaman "admin.php".
     if (mysqli_query($conn, $queryUpdate)) {
@@ -112,6 +113,12 @@ if (isset($_GET['id'])) {
                             <label for="kontak" class="col-sm-2 col-form-label">Kontak</label>
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="kontak" name="kontak" value="<?php echo $data['kontak']; ?>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kontak" class="col-sm-2 col-form-label">Keperluan</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="keperluan" name="keperluan" value="<?php echo $data['keperluan']; ?>">
                             </div>
                         </div>
                         <div class="form-group row">

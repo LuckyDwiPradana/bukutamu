@@ -30,13 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Mendapatkan data dalam rentang waktu tertentu
 $dataRentangTanggal = getDataByDateRange($conn, $startDate, $endDate);
-
 // Membuat file Excel
 $filename = "export_pengunjung_" . date('Ymd') . ".xls";
-
 header("Content-Type: application/vnd.ms-excel");
 header("Content-Disposition: attachment; filename=\"$filename\"");
-
 echo '<table border="1">';
 echo '<thead>';
 echo '<tr>';
@@ -46,10 +43,10 @@ echo '<th>Nama</th>';
 echo '<th>Alamat</th>';
 echo '<th>Instansi</th>';
 echo '<th>Kontak</th>';
+echo '<th>Keperluan</th>';
 echo '</tr>';
 echo '</thead>';
 echo '<tbody>';
-
 //Menginisialisasi variabel $no dengan nilai 1 
 //loop while data $dataRentangTanggal.
 //disimpan di $data
@@ -62,9 +59,9 @@ while ($data = mysqli_fetch_array($dataRentangTanggal)) {
     echo '<td>' . $data['alamat'] . '</td>';
     echo '<td>' . $data['instansi'] . '</td>';
     echo '<td>' . $data['kontak'] . '</td>';
+    echo '<td>' . $data['keperluan'] . '</td>';
     echo '</tr>';
 }
-
 echo '</tbody>';
 echo '</table>';
 ?>
